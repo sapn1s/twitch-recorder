@@ -1,0 +1,4 @@
+/settings.ini
+*.pyc
+**/*.pyc
+token_data.json
