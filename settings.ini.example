@@ -3,3 +3,5 @@ CLIENT_ID=
 CLIENT_SECRET=
 [STREAMERS]
 username=tenz
+[OUTPUT]
+quality=28
