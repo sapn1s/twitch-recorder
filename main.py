@@ -61,8 +61,7 @@ async def main():
     username = config["STREAMERS"]["username"]
     wait_time = 1
 
-    stop_event = asyncio.Event()
-    input_task = asyncio.create_task(wait_for_user_input(stop_event))
+    
 
     while True:
         try:
@@ -77,6 +76,8 @@ async def main():
                 await asyncio.sleep(120)
             # Online
             print(f"{username} is online!")
+            stop_event = asyncio.Event()
+            input_task = asyncio.create_task(wait_for_user_input(stop_event))
             stream_url = get_stream_url(username)
             print("Stream URL:", stream_url)
             if (stream_url):
