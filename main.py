@@ -17,12 +17,6 @@ if not os.path.exists(output_folder):
 MAX_WAIT_TIME = 300
 
 
-async def wait_for_user_input(stop_event):
-    """Wait for user input and then set the stop_event."""
-    input("Press Enter to stop the recording...")
-    await stop_event.set()
-
-
 async def record_stream(stream_url, filename, stop_event):
     """Record the stream and listen for the stop event."""
     ffmpeg_cmd = [
@@ -61,8 +55,6 @@ async def main():
     username = config["STREAMERS"]["username"]
     wait_time = 1
 
-    
-
     while True:
         try:
             streaming = False
@@ -77,7 +69,7 @@ async def main():
             # Online
             print(f"{username} is online!")
             stop_event = asyncio.Event()
-            input_task = asyncio.create_task(wait_for_user_input(stop_event))
+
             stream_url = get_stream_url(username)
             print("Stream URL:", stream_url)
             if (stream_url):
@@ -93,9 +85,6 @@ async def main():
             print(f"Retrying in {wait_time} seconds...")
             await asyncio.sleep(wait_time)
             wait_time = min(wait_time * 2, MAX_WAIT_TIME)
-        finally:
-            # Cancel the input task if it's still running
-            input_task.cancel()
 
 
 def check_streaming(token, username):
